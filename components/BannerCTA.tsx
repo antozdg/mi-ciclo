@@ -22,7 +22,7 @@ export default function BannerCTA() {
         </h2>
 
         <a
-          href="#"
+          href="/onboarding"
           className="inline-flex items-center gap-2 px-10 py-5 rounded-full text-base font-bold transition-all duration-200"
           style={{
             fontFamily: "var(--font-dm-sans)",

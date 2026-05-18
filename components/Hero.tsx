@@ -135,7 +135,7 @@ export default function Hero() {
         {/* CTA buttons */}
         <div className="flex flex-col sm:flex-row items-center gap-4">
           <a
-            href="#empezar"
+            href="/onboarding"
             className="inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-semibold text-white transition-all duration-200"
             style={{
               fontFamily: "var(--font-dm-sans)",

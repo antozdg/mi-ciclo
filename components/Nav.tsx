@@ -87,7 +87,7 @@ export default function Nav() {
 
           {/* CTA button */}
           <a
-            href="#empezar"
+            href="/onboarding"
             className="inline-flex items-center gap-1 px-5 py-2.5 rounded-full text-sm font-semibold text-white transition-all duration-200"
             style={{
               fontFamily: "var(--font-dm-sans)",
