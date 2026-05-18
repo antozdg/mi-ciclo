@@ -1,0 +1,188 @@
+"use client";
+
+export default function Hero() {
+  return (
+    <section
+      id="como-funciona"
+      className="min-h-screen flex flex-col items-center justify-center px-6 lg:px-8 pt-24 pb-20"
+      style={{ backgroundColor: "#3D0845" }}
+    >
+      <div className="max-w-4xl mx-auto w-full flex flex-col items-center text-center gap-10">
+        {/* Eyebrow badge */}
+        <div
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium border"
+          style={{
+            fontFamily: "var(--font-dm-sans)",
+            borderColor: "#FF6A00",
+            color: "#FF6A00",
+            backgroundColor: "rgba(255, 106, 0, 0.1)",
+          }}
+        >
+          <span>✦</span>
+          <span>Tu ciclo. Tu poder.</span>
+        </div>
+
+        {/* Pills stack — hero visual element */}
+        <div className="flex flex-col items-center gap-3 w-full">
+          {/* Row 1 */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full">
+            {/* Pill solid white */}
+            <div
+              className="px-7 py-4 rounded-full sm:-rotate-1"
+              style={{ backgroundColor: "#FFFFFF" }}
+            >
+              <span
+                className="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-none whitespace-nowrap"
+                style={{
+                  fontFamily: "var(--font-syne)",
+                  fontWeight: 800,
+                  color: "#3D0845",
+                }}
+              >
+                Tu mente
+              </span>
+            </div>
+            {/* Pill outline */}
+            <div
+              className="px-7 py-4 rounded-full border-2 sm:rotate-1"
+              style={{ borderColor: "rgba(255,255,255,0.4)" }}
+            >
+              <span
+                className="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-none whitespace-nowrap"
+                style={{
+                  fontFamily: "var(--font-syne)",
+                  fontWeight: 800,
+                  color: "rgba(255,255,255,0.85)",
+                }}
+              >
+                y tu cuerpo
+              </span>
+            </div>
+          </div>
+
+          {/* Row 2 */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full">
+            {/* Pill lavender */}
+            <div
+              className="px-7 py-4 rounded-full sm:rotate-1"
+              style={{ backgroundColor: "#C97EFF" }}
+            >
+              <span
+                className="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-none whitespace-nowrap"
+                style={{
+                  fontFamily: "var(--font-syne)",
+                  fontWeight: 800,
+                  color: "#3D0845",
+                }}
+              >
+                en cada fase
+              </span>
+            </div>
+            {/* Pill magenta */}
+            <div
+              className="px-7 py-4 rounded-full sm:-rotate-1"
+              style={{ backgroundColor: "#FF1FA3" }}
+            >
+              <span
+                className="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-none whitespace-nowrap"
+                style={{
+                  fontFamily: "var(--font-syne)",
+                  fontWeight: 800,
+                  color: "#FFFFFF",
+                }}
+              >
+                en sync
+              </span>
+            </div>
+          </div>
+
+          {/* Row 3 */}
+          <div className="flex items-center justify-center">
+            {/* Pill orange */}
+            <div
+              className="px-7 py-4 rounded-full"
+              style={{ backgroundColor: "#FF6A00" }}
+            >
+              <span
+                className="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-none whitespace-nowrap"
+                style={{
+                  fontFamily: "var(--font-syne)",
+                  fontWeight: 800,
+                  color: "#FFFFFF",
+                }}
+              >
+                Mi Ciclo
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* TODO: App mockup image — colocar debajo de las pills en desktop, full width en mobile */}
+
+        {/* Subtitle */}
+        <p
+          className="text-lg sm:text-xl max-w-2xl leading-relaxed font-medium"
+          style={{
+            fontFamily: "var(--font-dm-sans)",
+            color: "#E8B4FF",
+          }}
+        >
+          Entendé la predisposición que tiene tu cuerpo en cada momento del mes
+          — tu energía, tus emociones, tu bienestar. Solo cargá tus períodos y
+          la app hace el resto.
+        </p>
+
+        {/* CTA buttons */}
+        <div className="flex flex-col sm:flex-row items-center gap-4">
+          <a
+            href="#empezar"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-semibold text-white transition-all duration-200"
+            style={{
+              fontFamily: "var(--font-dm-sans)",
+              fontWeight: 600,
+              backgroundColor: "#FF1FA3",
+            }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLElement).style.background =
+                "linear-gradient(135deg, #FF1FA3, #FF6A00)";
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLElement).style.background = "#FF1FA3";
+            }}
+          >
+            Empezar gratis <span aria-hidden="true">→</span>
+          </a>
+          <a
+            href="#como-funciona"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-semibold text-white transition-all duration-200"
+            style={{
+              fontFamily: "var(--font-dm-sans)",
+              fontWeight: 600,
+              backgroundColor: "#FF6A00",
+            }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLElement).style.filter = "brightness(110%)";
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLElement).style.filter = "brightness(100%)";
+            }}
+          >
+            Cómo funciona
+          </a>
+        </div>
+
+        {/* Tag below buttons */}
+        <p
+          className="text-sm"
+          style={{
+            fontFamily: "var(--font-dm-sans)",
+            color: "rgba(255,255,255,0.45)",
+          }}
+        >
+          <span style={{ color: "#FF1FA3" }}>●</span>{" "}
+          Personalizada para vos desde el día 1
+        </p>
+      </div>
+    </section>
+  );
+}
