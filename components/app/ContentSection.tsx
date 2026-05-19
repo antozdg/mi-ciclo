@@ -24,8 +24,8 @@ export default function ContentSection({ phase }: Props) {
 
   return (
     <div className="flex flex-col gap-4">
-      {/* Category tabs — horizontal scroll on mobile */}
-      <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
+      {/* Category tabs — 3x2 grid so all 6 are always visible */}
+      <div className="grid grid-cols-3 gap-2">
         {CATEGORIES.map((cat) => {
           const m = CATEGORY_META[cat];
           const isActive = cat === active;
@@ -33,7 +33,7 @@ export default function ContentSection({ phase }: Props) {
             <button
               key={cat}
               onClick={() => setActive(cat)}
-              className="flex items-center gap-1.5 px-4 py-2.5 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-200 flex-shrink-0"
+              className="flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200"
               style={{
                 fontFamily: "var(--font-dm-sans)",
                 backgroundColor: isActive ? m.accent : "rgba(255,255,255,0.06)",

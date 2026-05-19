@@ -1,9 +1,30 @@
 export type Phase = "menstrual" | "folicular" | "ovulatoria" | "lutea";
 
+export type ActivityType =
+  | "running"
+  | "gym"
+  | "yoga"
+  | "pilates"
+  | "crossfit"
+  | "natacion"
+  | "caminata"
+  | "ciclismo";
+
+export type DietBase = "omnivora" | "vegetariana" | "vegana";
+export type Goal = "seguimiento" | "embarazo" | "anticoncepcion";
+
+export interface UserPreferences {
+  activities: ActivityType[];
+  dietBase: DietBase;
+  sinGluten: boolean;
+  goal: Goal;
+}
+
 export interface CycleConfig {
-  lastPeriodStart: string; // ISO date string
+  lastPeriodStart: string; // ISO date string YYYY-MM-DD
   cycleLength: number;
   periodLength: number;
+  preferences?: UserPreferences;
 }
 
 export interface CycleStatus {
@@ -34,8 +55,9 @@ export function getCycleStatus(config: CycleConfig): CycleStatus {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  const startDate = new Date(lastPeriodStart);
-  startDate.setHours(0, 0, 0, 0);
+  // Parse as local date to avoid UTC offset shifting the day
+  const [y, m, d] = lastPeriodStart.split("-").map(Number);
+  const startDate = new Date(y, m - 1, d);
 
   const diffMs = today.getTime() - startDate.getTime();
   const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));

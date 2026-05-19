@@ -57,21 +57,35 @@ export default function CycleMiniMap({ status }: Props) {
             <div
               key={day}
               className="relative flex items-center justify-center"
-              style={{ width: 20, height: 20 }}
+              style={{ width: 22, height: 22 }}
               title={`Día ${day}`}
             >
+              {isToday && (
+                <div
+                  className="absolute rounded-full"
+                  style={{
+                    width: 22,
+                    height: 22,
+                    backgroundColor: "white",
+                    opacity: 0.25,
+                  }}
+                />
+              )}
               <div
                 className="rounded-full transition-all duration-200"
                 style={{
-                  width: isToday ? 20 : 14,
-                  height: isToday ? 20 : 14,
+                  width: isToday ? 18 : 13,
+                  height: isToday ? 18 : 13,
                   backgroundColor: isPast || isToday
                     ? PHASE_COLORS[phase]
-                    : `${PHASE_COLORS[phase]}30`,
+                    : `${PHASE_COLORS[phase]}28`,
                   border: isToday
-                    ? `2px solid white`
+                    ? `2.5px solid white`
                     : isFertile
-                    ? `1px solid ${PHASE_COLORS[phase]}80`
+                    ? `1px solid ${PHASE_COLORS[phase]}70`
+                    : "none",
+                  boxShadow: isToday
+                    ? `0 0 8px ${PHASE_COLORS[phase]}CC`
                     : "none",
                 }}
               />
