@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { Phase } from "@/lib/cycle";
 import { Category, CATEGORY_META, PHASE_CONTENT } from "@/lib/content";
+import { useLang } from "@/lib/lang-context";
+import { T } from "@/lib/translations";
 
 interface Props {
   phase: Phase;
@@ -19,16 +21,19 @@ const CATEGORIES: Category[] = [
 
 export default function ContentSection({ phase }: Props) {
   const [active, setActive] = useState<Category>("hormonas");
-  const content = PHASE_CONTENT[phase][active];
+  const { lang } = useLang();
+  const t = T[lang];
+  const content = PHASE_CONTENT[lang][phase][active];
   const meta = CATEGORY_META[active];
 
   return (
     <div className="flex flex-col gap-4">
-      {/* Category tabs — 3x2 grid so all 6 are always visible */}
+      {/* Category tabs — 3x2 grid */}
       <div className="grid grid-cols-3 gap-2">
         {CATEGORIES.map((cat) => {
           const m = CATEGORY_META[cat];
           const isActive = cat === active;
+          const label = t.categories[cat];
           return (
             <button
               key={cat}
@@ -42,7 +47,7 @@ export default function ContentSection({ phase }: Props) {
               }}
             >
               <span>{m.icon}</span>
-              <span>{m.label}</span>
+              <span>{label}</span>
             </button>
           );
         })}
@@ -64,20 +69,13 @@ export default function ContentSection({ phase }: Props) {
           <div>
             <p
               className="text-xs font-semibold uppercase tracking-widest mb-1"
-              style={{
-                fontFamily: "var(--font-dm-sans)",
-                color: meta.accent,
-              }}
+              style={{ fontFamily: "var(--font-dm-sans)", color: meta.accent }}
             >
-              {meta.label}
+              {t.categories[active]}
             </p>
             <h3
               className="text-lg lg:text-xl font-bold leading-snug"
-              style={{
-                fontFamily: "var(--font-syne)",
-                fontWeight: 800,
-                color: "#FFFFFF",
-              }}
+              style={{ fontFamily: "var(--font-syne)", fontWeight: 800, color: "#FFFFFF" }}
             >
               {content.title}
             </h3>
@@ -87,10 +85,7 @@ export default function ContentSection({ phase }: Props) {
         {/* Body */}
         <p
           className="text-sm lg:text-base leading-relaxed"
-          style={{
-            fontFamily: "var(--font-dm-sans)",
-            color: "rgba(255,255,255,0.7)",
-          }}
+          style={{ fontFamily: "var(--font-dm-sans)", color: "rgba(255,255,255,0.7)" }}
         >
           {content.body}
         </p>
@@ -99,17 +94,11 @@ export default function ContentSection({ phase }: Props) {
         {content.highlight && (
           <div
             className="rounded-xl p-4 border-l-4"
-            style={{
-              backgroundColor: `${meta.accent}12`,
-              borderColor: meta.accent,
-            }}
+            style={{ backgroundColor: `${meta.accent}12`, borderColor: meta.accent }}
           >
             <p
               className="text-sm leading-relaxed font-medium"
-              style={{
-                fontFamily: "var(--font-dm-sans)",
-                color: "rgba(255,255,255,0.85)",
-              }}
+              style={{ fontFamily: "var(--font-dm-sans)", color: "rgba(255,255,255,0.85)" }}
             >
               {content.highlight}
             </p>
@@ -120,12 +109,9 @@ export default function ContentSection({ phase }: Props) {
         <div className="flex flex-col gap-2">
           <p
             className="text-xs font-semibold uppercase tracking-widest mb-1"
-            style={{
-              fontFamily: "var(--font-dm-sans)",
-              color: "rgba(255,255,255,0.35)",
-            }}
+            style={{ fontFamily: "var(--font-dm-sans)", color: "rgba(255,255,255,0.35)" }}
           >
-            Claves para esta fase
+            {t.content.tipsLabel}
           </p>
           {content.tips.map((tip, i) => (
             <div key={i} className="flex items-start gap-3">
@@ -135,10 +121,7 @@ export default function ContentSection({ phase }: Props) {
               />
               <p
                 className="text-sm leading-relaxed"
-                style={{
-                  fontFamily: "var(--font-dm-sans)",
-                  color: "rgba(255,255,255,0.65)",
-                }}
+                style={{ fontFamily: "var(--font-dm-sans)", color: "rgba(255,255,255,0.65)" }}
               >
                 {tip}
               </p>

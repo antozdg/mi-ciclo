@@ -1,9 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useLang } from "@/lib/lang-context";
+import { T } from "@/lib/translations";
+import LangToggle from "./LangToggle";
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
+  const { lang } = useLang();
+  const t = T[lang].nav;
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -38,71 +43,45 @@ export default function Nav() {
             <a
               href="#como-funciona"
               className="text-sm font-medium transition-colors duration-200"
-              style={{
-                fontFamily: "var(--font-dm-sans)",
-                color: "rgba(255,255,255,0.7)",
-              }}
-              onMouseEnter={(e) =>
-                ((e.target as HTMLElement).style.color = "#C97EFF")
-              }
-              onMouseLeave={(e) =>
-                ((e.target as HTMLElement).style.color = "rgba(255,255,255,0.7)")
-              }
+              style={{ fontFamily: "var(--font-dm-sans)", color: "rgba(255,255,255,0.7)" }}
+              onMouseEnter={(e) => ((e.target as HTMLElement).style.color = "#C97EFF")}
+              onMouseLeave={(e) => ((e.target as HTMLElement).style.color = "rgba(255,255,255,0.7)")}
             >
-              Cómo funciona
+              {t.howItWorks}
             </a>
             <a
               href="#tu-ciclo"
               className="text-sm font-medium transition-colors duration-200"
-              style={{
-                fontFamily: "var(--font-dm-sans)",
-                color: "rgba(255,255,255,0.7)",
-              }}
-              onMouseEnter={(e) =>
-                ((e.target as HTMLElement).style.color = "#C97EFF")
-              }
-              onMouseLeave={(e) =>
-                ((e.target as HTMLElement).style.color = "rgba(255,255,255,0.7)")
-              }
+              style={{ fontFamily: "var(--font-dm-sans)", color: "rgba(255,255,255,0.7)" }}
+              onMouseEnter={(e) => ((e.target as HTMLElement).style.color = "#C97EFF")}
+              onMouseLeave={(e) => ((e.target as HTMLElement).style.color = "rgba(255,255,255,0.7)")}
             >
-              Tu ciclo
+              {t.yourCycle}
             </a>
             <a
               href="#fases"
               className="text-sm font-medium transition-colors duration-200"
-              style={{
-                fontFamily: "var(--font-dm-sans)",
-                color: "rgba(255,255,255,0.7)",
-              }}
-              onMouseEnter={(e) =>
-                ((e.target as HTMLElement).style.color = "#C97EFF")
-              }
-              onMouseLeave={(e) =>
-                ((e.target as HTMLElement).style.color = "rgba(255,255,255,0.7)")
-              }
+              style={{ fontFamily: "var(--font-dm-sans)", color: "rgba(255,255,255,0.7)" }}
+              onMouseEnter={(e) => ((e.target as HTMLElement).style.color = "#C97EFF")}
+              onMouseLeave={(e) => ((e.target as HTMLElement).style.color = "rgba(255,255,255,0.7)")}
             >
-              Fases
+              {t.phases}
             </a>
           </div>
 
-          {/* CTA button */}
-          <a
-            href="/onboarding"
-            className="inline-flex items-center gap-1 px-5 py-2.5 rounded-full text-sm font-semibold text-white transition-all duration-200"
-            style={{
-              fontFamily: "var(--font-dm-sans)",
-              backgroundColor: "#FF1FA3",
-            }}
-            onMouseEnter={(e) => {
-              (e.currentTarget as HTMLElement).style.background =
-                "linear-gradient(135deg, #FF1FA3, #FF6A00)";
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLElement).style.background = "#FF1FA3";
-            }}
-          >
-            Empezar gratis <span aria-hidden="true">→</span>
-          </a>
+          {/* Right side: lang toggle + CTA */}
+          <div className="flex items-center gap-3">
+            <LangToggle />
+            <a
+              href="/onboarding"
+              className="inline-flex items-center gap-1 px-5 py-2.5 rounded-full text-sm font-semibold text-white transition-all duration-200"
+              style={{ fontFamily: "var(--font-dm-sans)", backgroundColor: "#FF1FA3" }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "linear-gradient(135deg, #FF1FA3, #FF6A00)"; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "#FF1FA3"; }}
+            >
+              {t.startFree} <span aria-hidden="true">→</span>
+            </a>
+          </div>
         </div>
       </div>
     </nav>

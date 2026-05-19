@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Syne, DM_Sans } from "next/font/google";
 import "./globals.css";
+import { LangProvider } from "@/lib/lang-context";
 
 const syne = Syne({
   subsets: ["latin"],
@@ -36,7 +37,7 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className={`${syne.variable} ${dmSans.variable} antialiased`}>
-        {children}
+        <LangProvider>{children}</LangProvider>
       </body>
     </html>
   );

@@ -2,12 +2,17 @@
 
 import { useRouter } from "next/navigation";
 import { clearConfig } from "@/lib/storage";
+import { useLang } from "@/lib/lang-context";
+import { T } from "@/lib/translations";
+import LangToggle from "@/components/LangToggle";
 
 export default function AppNav() {
   const router = useRouter();
+  const { lang } = useLang();
+  const t = T[lang].appNav;
 
   function handleReset() {
-    if (confirm("¿Resetear tus datos y volver al inicio?")) {
+    if (confirm(t.resetConfirm)) {
       clearConfig();
       router.push("/onboarding");
     }
@@ -32,17 +37,20 @@ export default function AppNav() {
         </a>
 
         {/* Actions */}
-        <button
-          onClick={handleReset}
-          className="text-xs px-3 py-1.5 rounded-full transition-colors duration-200"
-          style={{
-            fontFamily: "var(--font-dm-sans)",
-            color: "rgba(255,255,255,0.4)",
-            border: "1px solid rgba(255,255,255,0.1)",
-          }}
-        >
-          Editar datos
-        </button>
+        <div className="flex items-center gap-2">
+          <LangToggle />
+          <button
+            onClick={handleReset}
+            className="text-xs px-3 py-1.5 rounded-full transition-colors duration-200"
+            style={{
+              fontFamily: "var(--font-dm-sans)",
+              color: "rgba(255,255,255,0.4)",
+              border: "1px solid rgba(255,255,255,0.1)",
+            }}
+          >
+            {t.editData}
+          </button>
+        </div>
       </div>
     </nav>
   );

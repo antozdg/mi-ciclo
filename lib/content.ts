@@ -1,4 +1,5 @@
 import { Phase } from "./cycle";
+import { Lang } from "./translations";
 
 export type Category =
   | "hormonas"
@@ -12,7 +13,7 @@ export interface ContentItem {
   title: string;
   body: string;
   tips: string[];
-  highlight?: string; // optional callout box
+  highlight?: string;
 }
 
 export interface PhaseContent {
@@ -26,17 +27,17 @@ export interface PhaseContent {
 
 export const CATEGORY_META: Record<
   Category,
-  { label: string; icon: string; accent: string }
+  { icon: string; accent: string }
 > = {
-  hormonas: { label: "Hormonas", icon: "🧬", accent: "#FF1FA3" },
-  nutricion: { label: "Nutrición", icon: "🥗", accent: "#FF6A00" },
-  ejercicio: { label: "Ejercicio", icon: "⚡", accent: "#C97EFF" },
-  emociones: { label: "Emociones", icon: "🌊", accent: "#FF1FA3" },
-  fertilidad: { label: "Fertilidad", icon: "✨", accent: "#FFE94D" },
-  suplementos: { label: "Suplementos", icon: "💊", accent: "#4CAF50" },
+  hormonas: { icon: "🧬", accent: "#FF1FA3" },
+  nutricion: { icon: "🥗", accent: "#FF6A00" },
+  ejercicio: { icon: "⚡", accent: "#C97EFF" },
+  emociones: { icon: "🌊", accent: "#FF1FA3" },
+  fertilidad: { icon: "✨", accent: "#FFE94D" },
+  suplementos: { icon: "💊", accent: "#4CAF50" },
 };
 
-export const PHASE_CONTENT: Record<Phase, PhaseContent> = {
+const ES_CONTENT: Record<Phase, PhaseContent> = {
   menstrual: {
     hormonas: {
       title: "Estrógeno y progesterona en su mínimo",
@@ -89,7 +90,7 @@ export const PHASE_CONTENT: Record<Phase, PhaseContent> = {
         "Si evitás un embarazo, seguí usando método anticonceptivo.",
         "El primer día del período marca el Día 1 del nuevo ciclo.",
       ],
-      highlight: "Fertilidad actual: muy baja. Tu ventana fértil comienza aproximadamente en el día " + "{{fertileStart}}" + " de tu ciclo.",
+      highlight: "Fertilidad actual: muy baja. Tu ventana fértil comienza aproximadamente en el día {{fertileStart}} de tu ciclo.",
     },
     suplementos: {
       title: "Hierro, magnesio y omega-3",
@@ -320,4 +321,295 @@ export const PHASE_CONTENT: Record<Phase, PhaseContent> = {
       highlight: "El magnesio es el suplemento con más evidencia para el SPM. Si tomás uno solo, que sea ese.",
     },
   },
+};
+
+const EN_CONTENT: Record<Phase, PhaseContent> = {
+  menstrual: {
+    hormonas: {
+      title: "Estrogen and progesterone at their lowest",
+      body: "During menstruation, both estrogen and progesterone are at their lowest levels. This is what triggers bleeding and creates that feeling of low energy and heightened sensitivity. It's not weakness — it's biology.",
+      tips: [
+        "Menstrual pain is caused by prostaglandins, compounds that contract the uterus.",
+        "Heat helps relax uterine muscles and reduces pain.",
+        "Low estrogen levels can affect your mood — it's normal to feel more withdrawn.",
+      ],
+      highlight: "Your body is doing enormous work. Rest isn't optional — it's part of the process.",
+    },
+    nutricion: {
+      title: "Replenish iron and reduce inflammation",
+      body: "You lose iron through bleeding, so prioritize iron-rich foods. Combine them with vitamin C for better absorption. Reduce inflammatory foods like refined sugar, alcohol and ultra-processed food that can worsen cramps.",
+      tips: [
+        "Iron: lentils, spinach, lean red meat, tofu, pumpkin seeds.",
+        "Vitamin C to absorb iron: red pepper, orange, kiwi, strawberries.",
+        "Omega-3: salmon, sardines, walnuts — reduces inflammation and cramps.",
+        "Avoid excess caffeine — it can intensify cramps.",
+      ],
+      highlight: "Dark chocolate +70% cacao has magnesium and antioxidants — one of the few cravings that's actually backed by science.",
+    },
+    ejercicio: {
+      title: "Gentle, mindful movement",
+      body: "This isn't the time for intense workouts. Your body is working hard internally. Gentle movement helps circulate blood, reduces cramps and improves mood without draining your reserves.",
+      tips: [
+        "Restorative or yin yoga: ideal for the first days.",
+        "Gentle 20-30 minute walks: activate endorphins without overloading.",
+        "Hip and lower back stretches to relieve pain.",
+        "If your flow is very heavy, day 1 and 2 are for rest. No guilt.",
+      ],
+      highlight: "Listen to your body. If you need to stay still, staying still IS doing something.",
+    },
+    emociones: {
+      title: "Introversion, clarity and release",
+      body: "The hormonal drop can bring irritability, sadness or a feeling of being at the edge. But this phase also has something powerful: brutal clarity about what you want and don't want. It's a good time to reflect, not to make big decisions.",
+      tips: [
+        "Journaling: write without filter what you feel. Don't edit it.",
+        "Set limits on your calendar — canceling plans isn't social failure.",
+        "If you cry 'for no reason', that is the reason: your body processes a lot internally.",
+        "Avoid important difficult conversations on the most intense days.",
+      ],
+      highlight: "What you suspect during your menstrual phase about your life is usually true. Note it, but wait to act.",
+    },
+    fertilidad: {
+      title: "Very low fertility",
+      body: "During menstruation, the probability of getting pregnant is very low but not impossible. The egg from the previous cycle is already gone. However, since sperm can live up to 5 days, if you ovulate very early in your cycle, there is a minimal chance.",
+      tips: [
+        "If you're trying to conceive, this isn't your fertile window.",
+        "If you're avoiding pregnancy, keep using contraception.",
+        "The first day of your period marks Day 1 of the new cycle.",
+      ],
+      highlight: "Current fertility: very low. Your fertile window begins approximately on day {{fertileStart}} of your cycle.",
+    },
+    suplementos: {
+      title: "Iron, magnesium and omega-3",
+      body: "This is the phase where supplements have the most direct impact. Replenishing what the body loses and reducing inflammation makes a real difference in how you feel.",
+      tips: [
+        "Iron: especially if your flow is heavy. Take it with vitamin C.",
+        "Magnesium: reduces cramps, improves sleep and mood. Glycinate or citrate form.",
+        "Omega-3: reduces inflammatory prostaglandins that cause cramps.",
+        "Vitamin D: many people with intense cramps have a deficiency.",
+        "Avoid calcium at the same time as iron — they compete for absorption.",
+      ],
+      highlight: "Magnesium glycinate taken before bed is one of the best-evidenced supplements for cramps and sleep in this phase.",
+    },
+  },
+
+  folicular: {
+    hormonas: {
+      title: "Estrogen starts to rise",
+      body: "Follicles in the ovaries begin to mature and produce increasing amounts of estrogen. This hormone is your ally: it improves mood, energy, memory, skin and libido. Your brain literally functions better with high estrogen.",
+      tips: [
+        "High estrogen increases serotonin — hence the good mood in this phase.",
+        "Verbal memory and processing speed improve with high estrogen.",
+        "Skin tends to look more luminous and hair shinier.",
+        "Testosterone also rises slightly, increasing confidence.",
+      ],
+      highlight: "This is your 'recharge' phase. Everything you plant here — habits, projects, connections — has a better chance of thriving.",
+    },
+    nutricion: {
+      title: "Complex carbohydrates and fermented foods",
+      body: "Your energy is rising and your metabolism is more efficient. It's a good time to incorporate fermented foods that support estrogen metabolism, and complex carbohydrates to sustain growing energy.",
+      tips: [
+        "Fermented: kefir, natural yogurt, sauerkraut, kimchi, kombucha.",
+        "Cruciferous vegetables: broccoli, cauliflower, Brussels sprouts — help metabolize estrogen.",
+        "Flaxseeds: phytoestrogens that support hormonal balance.",
+        "Legumes: lentils, chickpeas — sustained energy.",
+        "Avoid severe caloric restrictions in this phase — your body handles them well now.",
+      ],
+      highlight: "Seed phase: incorporate flax and pumpkin seeds into your diet this week. They support hormone production.",
+    },
+    ejercicio: {
+      title: "Turn up the intensity — your body can handle more",
+      body: "Estrogen improves muscle strength, coordination and recovery. This is the best time for more demanding workouts, learning new movements and breaking your records. Your pain threshold is also higher now.",
+      tips: [
+        "HIIT, crossfit, running: your cardiovascular endurance is on the rise.",
+        "Strength and weights: estrogen increases muscle protein synthesis.",
+        "New classes or technical challenges: coordination and motor learning are optimized.",
+        "Take advantage to establish routines — your body incorporates them better now.",
+      ],
+      highlight: "Your muscles recover faster in this phase. You can train consecutive days without as much wear.",
+    },
+    emociones: {
+      title: "Curiosity, optimism and openness",
+      body: "High estrogen brings mental clarity, optimism and a desire to connect. This is a naturally extroverted phase: conversations flow, ideas appear, the future looks more hopeful. Take advantage for things that require social energy.",
+      tips: [
+        "Important meetings, presentations, networking: your moment.",
+        "Start new projects — motivation is high and genuine.",
+        "Your empathy is higher — good time for pending difficult conversations.",
+        "FOMO can be intense: learn to say no even if it's harder than in other phases.",
+      ],
+      highlight: "The energy of the follicular phase is real but finite. Don't waste it on commitments you don't want — save some for when it drops.",
+    },
+    fertilidad: {
+      title: "Rising fertility",
+      body: "As follicles mature, fertility increases toward ovulation. Cervical mucus begins to become more transparent and elastic — a natural sign that you're approaching your fertile window.",
+      tips: [
+        "Cervical mucus changes: from creamy/white to transparent and elastic like egg white.",
+        "Libido generally increases in this phase — part of the evolutionary design.",
+        "If trying to conceive: start paying attention to your body's signals.",
+        "If avoiding pregnancy: don't neglect contraception.",
+      ],
+      highlight: "The fertile window is approaching. The days before ovulation are almost as fertile as ovulation day itself.",
+    },
+    suplementos: {
+      title: "B6, zinc and seeds",
+      body: "In the follicular phase the body is in building mode. The nutrients that support hormone production and cellular energy are the stars.",
+      tips: [
+        "Zinc: supports follicle maturation. In pumpkin seeds, shellfish, meat.",
+        "Vitamin B6: regulates mood and supports hormonal synthesis.",
+        "Flaxseeds (1 tbsp/day): mild phytoestrogens that support this phase.",
+        "B-complex: sustained energy throughout the day.",
+        "Vitamin C: antioxidant that supports ovarian health.",
+      ],
+      highlight: "Seed rotation protocol: flax and pumpkin in the follicular phase. Sesame and sunflower in the luteal phase.",
+    },
+  },
+
+  ovulatoria: {
+    hormonas: {
+      title: "Peak estrogen, LH and testosterone",
+      body: "The luteinizing hormone (LH) spikes and triggers ovulation. Estrogen reaches its maximum and testosterone briefly rises. This combination creates your highest energy moment, social attractiveness and confidence of the month.",
+      tips: [
+        "LH peak triggers egg release — lasts approximately 24 hours.",
+        "High testosterone increases libido, assertiveness and motivation.",
+        "Peak estrogen improves verbal fluency and persuasive capacity.",
+        "You may feel a slight pain on one side of the abdomen — that's ovulation (mittelschmerz).",
+      ],
+      highlight: "Your body is at its biological peak. The confidence you feel now is real — it's not ego.",
+    },
+    nutricion: {
+      title: "Antioxidants and fiber to support ovulation",
+      body: "Ovulation generates controlled inflammation. Antioxidants help manage it. Fiber supports the elimination of excess estrogen. Keep a varied and colorful diet.",
+      tips: [
+        "Antioxidants: berries, tomatoes, asparagus, colorful peppers.",
+        "Fiber: vegetables, whole grains, legumes — eliminate hormonal excess.",
+        "Lean protein: chicken, fish, eggs — support hormonal synthesis.",
+        "Hydration: cervical mucus depends on you being well hydrated.",
+        "Anti-inflammatory foods: turmeric, ginger, garlic.",
+      ],
+      highlight: "Eat all the colors this week. Each plant pigment is a different antioxidant.",
+    },
+    ejercicio: {
+      title: "Your physical performance peak",
+      body: "The combination of estrogen, testosterone and LH creates the highest sports performance window of the cycle. Your strength, endurance and coordination are at their highest. Ideal for competitions, physical tests or breaking personal records.",
+      tips: [
+        "Maximum strength: the best time for heavy loads.",
+        "Intense cardio: your VO2 max is on the rise.",
+        "Team sports and activities with others: social energy boosts you.",
+        "Watch out for injuries: high estrogen can affect ligament laxity.",
+      ],
+      highlight: "If you have a competition, physical test or something important, try to schedule it in this window.",
+    },
+    emociones: {
+      title: "Charisma, connection and presence",
+      body: "You're at your peak of sociability and interpersonal attractiveness. Conversations flow, people seek you out, you feel present and confident. It's a good time to lead, present projects, or have conversations that require charisma and conviction.",
+      tips: [
+        "Presentations, pitches, negotiations: your time to shine.",
+        "Dates, first impressions, social events: charisma is at maximum.",
+        "Your voice sounds different — studies show the tone rises and becomes more attractive.",
+        "Watch out: high confidence can lead to impulsive commitments. Check before saying yes to everything.",
+      ],
+      highlight: "What feels easy now may require double the energy in other phases. Delegate, lead, connect.",
+    },
+    fertilidad: {
+      title: "Your fertile window — maximum fertility",
+      body: "You're at your highest fertility moment. The egg has been released and has a lifespan of 12-24 hours. Sperm can live up to 5 days, which is why the days before ovulation are also fertile.",
+      tips: [
+        "Cervical mucus is now transparent, elastic and abundant — like raw egg white.",
+        "If trying to get pregnant: this is the moment. Have sex every 1-2 days.",
+        "If avoiding pregnancy: maximum caution in these days.",
+        "Ovulation tests (LH): a positive peak indicates ovulation will occur in 24-48 hours.",
+        "Basal temperature rises 0.2°C after ovulation.",
+      ],
+      highlight: "Fertility: MAXIMUM. The egg is available for 12-24 hours. Previous days are also fertile.",
+    },
+    suplementos: {
+      title: "Antioxidants to support ovulation",
+      body: "Ovulation is a controlled inflammatory process. Antioxidants protect the egg and support its healthy release.",
+      tips: [
+        "CoQ10: improves egg quality — especially important if trying to conceive.",
+        "Vitamin E: fat-soluble antioxidant that protects the egg.",
+        "Vitamin C: supports post-ovulation progesterone synthesis.",
+        "Folic acid: essential if trying to conceive, but benefits everyone.",
+        "N-acetylcysteine (NAC): potent antioxidant that improves ovarian quality.",
+      ],
+      highlight: "CoQ10 (ubiquinol) has solid evidence for improving egg quality. Benefits everyone, not just those trying to conceive.",
+    },
+  },
+
+  lutea: {
+    hormonas: {
+      title: "Progesterone takes over",
+      body: "After ovulation, the empty follicle becomes the corpus luteum and produces progesterone. This hormone is calming, pro-sleep and pro-self-care. Estrogen also rises slightly. If there's no fertilization, both drop toward the end of the phase and the cycle restarts.",
+      tips: [
+        "Progesterone raises basal body temperature by 0.2-0.5°C.",
+        "It has a sedative effect — hence the tiredness and need for more sleep.",
+        "The drop in estrogen at the end of the phase can cause premenstrual symptoms.",
+        "Premenstrual syndrome (PMS) occurs in the second half of the luteal phase.",
+      ],
+      highlight: "Progesterone isn't your enemy — it's the nesting hormone. Embrace active calm mode.",
+    },
+    nutricion: {
+      title: "Magnesium, tryptophan and calming foods",
+      body: "Basal metabolism rises slightly — you may feel more hungry and that's normal. Cravings for carbohydrates and sugar have a hormonal basis. Prioritize foods that support serotonin and calm the nervous system.",
+      tips: [
+        "Magnesium: dark chocolate, seeds, nuts, legumes — reduces PMS.",
+        "Tryptophan (serotonin precursor): turkey, eggs, oats, banana, sunflower seeds.",
+        "Complex carbohydrates: oats, sweet potato, quinoa — satisfying without blood sugar spikes.",
+        "Sesame and sunflower seeds: support progesterone production.",
+        "Reduce salt to minimize fluid retention.",
+      ],
+      highlight: "Carb cravings in this phase are your body asking for serotonin. Give it to it the smart way.",
+    },
+    ejercicio: {
+      title: "Moderate strength, yoga and walks",
+      body: "High progesterone can make you feel more tired and with less tolerance for intense exercise. But movement is still beneficial — it reduces PMS, improves mood and helps with fluid retention.",
+      tips: [
+        "Pilates and yoga: perfect for this phase — strength without excessive impact.",
+        "Long walks: activate without exhausting, improve mood.",
+        "Moderate weights: you can maintain your routine but lower the intensity.",
+        "Swimming: water helps with inflammation and fluid retention.",
+        "Listen to fatigue — in the second half of this phase, rest is valuable.",
+      ],
+      highlight: "It's not that you're less — it's that your body is in a different mode. Move your body, but don't compete with yourself.",
+    },
+    emociones: {
+      title: "Depth, attention to detail and self-care",
+      body: "The luteal phase is the most misunderstood of the cycle. It's not 'the bad mood phase' — it's the phase of depth, introspection and sustained work. Your tolerance for nonsense drops, and that can be a compass if you learn to use it.",
+      tips: [
+        "Deep, solitary work: writing, analysis, individual creative projects.",
+        "Your radar detects inconsistencies better — useful for reviewing contracts, plans, etc.",
+        "If something bothers you now that didn't before, it may be real. Or it may be hormonal. Note it.",
+        "Reduce your social agenda if you can — it's not antisocial, it's self-regulation.",
+        "Exercise and magnesium are the best allies against emotional PMS.",
+      ],
+      highlight: "What you see clearly in the luteal phase about your life (relationships, work, habits) deserves attention — even if the way you feel it is intense.",
+    },
+    fertilidad: {
+      title: "Low fertility — if not fertilized",
+      body: "If the egg wasn't fertilized, the corpus luteum degrades, progesterone and estrogen drop, and the endometrium prepares to shed. Fertility is at its lowest point in the second half of the cycle.",
+      tips: [
+        "Cervical mucus returns to dry or creamy/white — sign of low fertility.",
+        "If trying to conceive and you had sex in the fertile window: the two-week wait begins now.",
+        "Early pregnancy symptoms can be confused with premenstrual symptoms.",
+        "A pregnancy test is reliable from day 12-14 post-ovulation.",
+      ],
+      highlight: "Fertility: low. If trying to conceive, you did what you could. Now it's time to wait.",
+    },
+    suplementos: {
+      title: "Magnesium, B6 and vitex for PMS",
+      body: "This is the phase where PMS supplements have the most impact. The goal is to support progesterone, calm the nervous system and reduce inflammation.",
+      tips: [
+        "Magnesium glycinate (300-400mg): reduces cramps, irritability, fluid retention and cravings.",
+        "Vitamin B6 (50-100mg): supports progesterone synthesis and serotonin production.",
+        "Vitex agnus-castus (chasteberry): regulates the luteal cycle — consult dosage with a professional.",
+        "Sesame and sunflower seeds: seed rotation protocol for the luteal phase.",
+        "L-theanine: calms anxiety without drowsiness. Ideal if PMS includes nervousness.",
+      ],
+      highlight: "Magnesium is the supplement with the most evidence for PMS. If you take only one, make it that one.",
+    },
+  },
+};
+
+export const PHASE_CONTENT: Record<Lang, Record<Phase, PhaseContent>> = {
+  es: ES_CONTENT,
+  en: EN_CONTENT,
 };

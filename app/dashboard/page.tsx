@@ -4,33 +4,12 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { loadConfig } from "@/lib/storage";
 import { getCycleStatus, CycleStatus, UserPreferences } from "@/lib/cycle";
+import { useLang } from "@/lib/lang-context";
+import { T } from "@/lib/translations";
 import AppNav from "@/components/app/AppNav";
 import PhaseHeader from "@/components/app/PhaseHeader";
 import CycleMiniMap from "@/components/app/CycleMiniMap";
 import ContentSection from "@/components/app/ContentSection";
-
-const ACTIVITY_LABELS: Record<string, string> = {
-  running: "Running",
-  gym: "Gym",
-  yoga: "Yoga",
-  pilates: "Pilates",
-  crossfit: "CrossFit",
-  natacion: "Natación",
-  caminata: "Caminata",
-  ciclismo: "Ciclismo",
-};
-
-const DIET_LABELS: Record<string, string> = {
-  omnivora: "Omnívora",
-  vegetariana: "Vegetariana",
-  vegana: "Vegana",
-};
-
-const GOAL_LABELS: Record<string, string> = {
-  seguimiento: "Seguimiento general",
-  embarazo: "Busco quedar embarazada",
-  anticoncepcion: "Evito el embarazo",
-};
 
 const GOAL_ICONS: Record<string, string> = {
   seguimiento: "📊",
@@ -40,6 +19,7 @@ const GOAL_ICONS: Record<string, string> = {
 
 export default function DashboardPage() {
   const router = useRouter();
+  const { lang } = useLang();
   const [status, setStatus] = useState<CycleStatus | null>(null);
   const [preferences, setPreferences] = useState<UserPreferences | null>(null);
 
@@ -67,16 +47,15 @@ export default function DashboardPage() {
     );
   }
 
-  const nextPeriodFormatted = status.nextPeriodDate.toLocaleDateString("es-AR", {
-    day: "numeric",
-    month: "long",
-  });
+  const t = T[lang].dashboard;
+
+  const nextPeriodFormatted = status.nextPeriodDate.toLocaleDateString(
+    lang === "es" ? "es-AR" : "en-US",
+    { day: "numeric", month: "long" }
+  );
 
   return (
-    <div
-      className="min-h-screen"
-      style={{ backgroundColor: "#3D0845" }}
-    >
+    <div className="min-h-screen" style={{ backgroundColor: "#3D0845" }}>
       <AppNav />
 
       <main className="max-w-2xl mx-auto px-4 lg:px-6 py-6 flex flex-col gap-5 pb-16">
@@ -91,56 +70,31 @@ export default function DashboardPage() {
           <div className="flex items-center gap-3">
             <span className="text-lg">🗓</span>
             <div>
-              <p
-                className="text-xs"
-                style={{
-                  fontFamily: "var(--font-dm-sans)",
-                  color: "rgba(255,255,255,0.4)",
-                }}
-              >
-                Próximo período estimado
+              <p className="text-xs" style={{ fontFamily: "var(--font-dm-sans)", color: "rgba(255,255,255,0.4)" }}>
+                {t.nextPeriod}
               </p>
-              <p
-                className="text-sm font-semibold"
-                style={{
-                  fontFamily: "var(--font-dm-sans)",
-                  color: "#FFB3EC",
-                }}
-              >
+              <p className="text-sm font-semibold" style={{ fontFamily: "var(--font-dm-sans)", color: "#FFB3EC" }}>
                 {nextPeriodFormatted}
               </p>
             </div>
           </div>
           <div
             className="px-3 py-1.5 rounded-full text-xs font-semibold"
-            style={{
-              fontFamily: "var(--font-dm-sans)",
-              backgroundColor: "rgba(255,179,236,0.1)",
-              color: "#FFB3EC",
-            }}
+            style={{ fontFamily: "var(--font-dm-sans)", backgroundColor: "rgba(255,179,236,0.1)", color: "#FFB3EC" }}
           >
-            en {status.daysUntilNextPeriod} días
+            {t.inDays} {status.daysUntilNextPeriod} {t.daysUnit}
           </div>
         </div>
 
-        {/* Fertile window callout — only show when relevant */}
+        {/* Fertile window callout */}
         {status.isInFertileWindow && (
           <div
             className="flex items-center gap-3 px-5 py-4 rounded-xl border"
-            style={{
-              backgroundColor: "rgba(255,233,77,0.08)",
-              borderColor: "rgba(255,233,77,0.3)",
-            }}
+            style={{ backgroundColor: "rgba(255,233,77,0.08)", borderColor: "rgba(255,233,77,0.3)" }}
           >
             <span className="text-lg">✨</span>
-            <p
-              className="text-sm font-medium"
-              style={{
-                fontFamily: "var(--font-dm-sans)",
-                color: "#FFE94D",
-              }}
-            >
-              Estás en tu ventana fértil
+            <p className="text-sm font-medium" style={{ fontFamily: "var(--font-dm-sans)", color: "#FFE94D" }}>
+              {t.fertileAlert}
             </p>
           </div>
         )}
@@ -161,84 +115,47 @@ export default function DashboardPage() {
               className="text-sm font-bold"
               style={{ fontFamily: "var(--font-syne)", color: "#FFFFFF" }}
             >
-              Tu perfil
+              {t.profile.title}
             </h2>
 
-            {/* Goal */}
             <div className="flex items-center gap-3">
               <span className="text-lg">{GOAL_ICONS[preferences.goal]}</span>
               <div>
-                <p
-                  className="text-xs"
-                  style={{
-                    fontFamily: "var(--font-dm-sans)",
-                    color: "rgba(255,255,255,0.4)",
-                  }}
-                >
-                  Objetivo
+                <p className="text-xs" style={{ fontFamily: "var(--font-dm-sans)", color: "rgba(255,255,255,0.4)" }}>
+                  {t.profile.goal}
                 </p>
-                <p
-                  className="text-sm font-semibold"
-                  style={{
-                    fontFamily: "var(--font-dm-sans)",
-                    color: "#FFFFFF",
-                  }}
-                >
-                  {GOAL_LABELS[preferences.goal]}
+                <p className="text-sm font-semibold" style={{ fontFamily: "var(--font-dm-sans)", color: "#FFFFFF" }}>
+                  {t.goals[preferences.goal]}
                 </p>
               </div>
             </div>
 
-            {/* Diet */}
             <div className="flex items-center gap-3">
               <span className="text-lg">🥗</span>
               <div>
-                <p
-                  className="text-xs"
-                  style={{
-                    fontFamily: "var(--font-dm-sans)",
-                    color: "rgba(255,255,255,0.4)",
-                  }}
-                >
-                  Alimentación
+                <p className="text-xs" style={{ fontFamily: "var(--font-dm-sans)", color: "rgba(255,255,255,0.4)" }}>
+                  {t.profile.diet}
                 </p>
-                <p
-                  className="text-sm font-semibold"
-                  style={{
-                    fontFamily: "var(--font-dm-sans)",
-                    color: "#FFFFFF",
-                  }}
-                >
-                  {DIET_LABELS[preferences.dietBase]}
-                  {preferences.sinGluten && " · Sin gluten"}
+                <p className="text-sm font-semibold" style={{ fontFamily: "var(--font-dm-sans)", color: "#FFFFFF" }}>
+                  {t.diets[preferences.dietBase]}
+                  {preferences.sinGluten && ` ${t.profile.sinGluten}`}
                 </p>
               </div>
             </div>
 
-            {/* Activities */}
             {preferences.activities.length > 0 && (
               <div className="flex flex-col gap-2">
-                <p
-                  className="text-xs"
-                  style={{
-                    fontFamily: "var(--font-dm-sans)",
-                    color: "rgba(255,255,255,0.4)",
-                  }}
-                >
-                  Actividad física
+                <p className="text-xs" style={{ fontFamily: "var(--font-dm-sans)", color: "rgba(255,255,255,0.4)" }}>
+                  {t.profile.activity}
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {preferences.activities.map((act) => (
                     <span
                       key={act}
                       className="px-3 py-1 rounded-full text-xs font-semibold"
-                      style={{
-                        fontFamily: "var(--font-dm-sans)",
-                        backgroundColor: "rgba(201,126,255,0.15)",
-                        color: "#C97EFF",
-                      }}
+                      style={{ fontFamily: "var(--font-dm-sans)", backgroundColor: "rgba(201,126,255,0.15)", color: "#C97EFF" }}
                     >
-                      {ACTIVITY_LABELS[act]}
+                      {t.activities[act]}
                     </span>
                   ))}
                 </div>
@@ -250,13 +167,9 @@ export default function DashboardPage() {
         {/* Disclaimer */}
         <p
           className="text-xs text-center px-4"
-          style={{
-            fontFamily: "var(--font-dm-sans)",
-            color: "rgba(255,255,255,0.2)",
-          }}
+          style={{ fontFamily: "var(--font-dm-sans)", color: "rgba(255,255,255,0.2)" }}
         >
-          Mi Ciclo es una herramienta informativa. No reemplaza el consejo médico
-          profesional.
+          {t.disclaimer}
         </p>
       </main>
     </div>
